@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  # The Application (PHP)
+  php:
+    image: 5degrees/php:latest
+    working_dir: /var/www
+    container_name: php
+    volumes:
+      - ./:/var/www
+    environment:
+      DB_PORT: 3306
+      DB_HOST: db
+
+  # The Web Server (Nginx)
+  nginx:
+    build:
+     context: ./infra/nginx
+     dockerfile: Dockerfile
+    working_dir: /var/www
+    container_name: nginx
+    volumes:
+      - ./:/var/www
+    links:
+      - php:php
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      SERVER_NAME: ${APP_URL}
+      ESC: $$
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+
+  # The Database
+  db:
+    image: mysql:5.7
+    container_name: database
+    restart: always
+    volumes:
+      - $PWD/scripts/database.sh:/docker-entrypoint-initdb.d/database.sh
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3306:3306

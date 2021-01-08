@@ -1,0 +1,2797 @@
+FORMAT: 1A
+
+# Pithos API Documentation
+<img style="float: right;bottom:85px;position: relative;width:64px;" src="./logo.png">
+
+"Pithos" is an API to get list of posts and media attachments, such as pictures and videos.
+
+# Group Merchants
+
+## Merchant Register [/api/merchant/register?{email}&{password}]
+
+### Register Merchant [POST]
+
++ Parameters
+    + email (string, required) - Email
+    + password (string, required) - Password
+
++ Request (application/json)
+
+    + Headers
+
+            email: email
+            password: password
+
++ Response 200 (application/json)
+
+    + Headers
+
+            X-Request-ID: f72fc914
+            X-Response-Time: 4ms
+
+    + Body
+
+            {
+                "meta": {
+                    "success": true,
+                    "message": "Created,Successful",
+                    "statusCode": 201
+                },
+                "data": {
+                    "merchant_id": 3,
+                    "api_token": "5771639e122a22a125afeb04dafa42f7"
+                }
+            }
+
+
++ Response 422 (application/json)
+
+    + Headers
+
+            X-Request-ID: f72fc914
+            X-Response-Time: 4ms
+
+    + Body
+
+            {
+                "meta": {
+                    "success": false,
+                    "error": "Missing required parameters: password",
+                    "status_code": 422
+                },
+                "data": []
+            }
+
+## Merchant Login [/api/merchant/login?{email}&{password}]
+
+### Merchant Login [POST]
+
++ Parameters
+    + email (string, required) - Email
+    + password (string, required) - Password
+
++ Request (application/json)
+
+    + Headers
+
+            email: email
+            password: password
+
++ Response 200 (application/json)
+
+    + Headers
+
+            X-Request-ID: f72fc914
+            X-Response-Time: 4ms
+
+    + Body
+
+            {
+                "meta": {
+                    "success": true,
+                    "message": "OK,Successful",
+                    "statusCode": 200
+                },
+                "data": {
+                    "api_token": "5771639e122a22a125afeb04dafa42f7"
+                }
+            }
+
+
++ Response 404 (application/json)
+
+    + Headers
+
+            X-Request-ID: f72fc914
+            X-Response-Time: 4ms
+
+    + Body
+
+            {
+                "meta": {
+                    "success": true,
+                    "message": "Not Found,Client Error",
+                    "statusCode": 404
+                },
+                "data": {
+                    "email": "abcd@gmail.com",
+                    "password": "password"
+                }
+            }
+
+## Update Merchant Account [/api/merchant/update/{id}?{email}&{password}&{api_token}]
+
+### Updates Merchant Account [POST]
+
++ Parameters
+    + email (string, required) - Email
+    + password (string, required) - Password
+    + id (number, required) - Merchant ID
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                "email": "email",
+                "password": "password"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "merchant_id": "3"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "meta": {
+                "success": false,
+                "error": "Bad Request,Client Error",
+                "status_code": 400
+            },
+            "data": {
+                "merchant_id": "5"
+            }
+        }
+
++ Response 404 (application/json)
+
+        {
+            "meta": {
+                "success": false,
+                "error": "Missing required parameters: password",
+                "status_code": 422
+            },
+            "data": {
+                "merchant_id": "3"
+            }
+        }
+
+## Deactive Merchant Account [/api/merchant/destroy/{id}?{api_token}]
+
+### Deactivates merchant account [DELETE]
+
++ Parameters
+    + id (number, required) - The posts id
+    + api_token (number, required) - Merchant API token
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "merchant_id": "3"
+            }
+        }
+
+# Group Posts
+
+## Get All Posts [/api/post/get_all?{api_token}&{user_id}&{limit}&{page}&{order_by}&{order}]
+
+### Get All Posts [GET]
+
++ Parameters
+    + user_id (number, required) - the user who belongs to post
+    + limit (number, required) - how many data you want to display per page
+    + page (number, required) - page number
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+    + api_token (string, required) - Merchant API token
+    + creator_id (number, optional) - the creator id
+    + tags (string, optional) - the tags name
+    + created_at_from (string, optional) - when created_at is greater than or equal to (Y-m-d H:i:s)
+    + created_at_until (string, optional) - when created_at is less than or equal to (Y-m-d H:i:s)
+    + updated_at_from (string, optional) - when updated_at is greater than or equal to (Y-m-d H:i:s)
+    + updated_at_until (string, optional) - when updated_at is less than or equal to (Y-m-d H:i:s)
+    + group_id (integer, optional) - get the posts data belongs to group
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 1,
+                        "merchant_id": 1,
+                        "creator_id": 5,
+                        "content": "Repellat fugiat delectus aut magni blanditiis ullam consequatur quidem. Ipsum et cum excepturi vel. Sed ut laudantium magni voluptates mollitia. Ducimus nemo quia quisquam dolorem.",
+                        "tags": "Ut dolorem odit dolore tempora rerum illo. Harum error dolorem omnis quia debitis tempore cum. Et illo odit sequi voluptas aspernatur et doloremque.",
+                        "type": "text",
+                        "access": "public",
+                        "original_post": "",
+                        "created_at": "1991-10-30 03:08:16",
+                        "updated_at": "1994-08-01 10:20:19",
+                        "likes_count": 1,
+                        "bookmarks_count": 0,
+                        "attachments": [
+                            {
+                                "id": 8,
+                                "post_id": 1,
+                                "media_url": "https://lorempixel.com/640/480/?97819",
+                                "created_at": "1970-06-18 05:45:28",
+                                "updated_at": "1995-11-20 14:05:09"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 2,
+                        "merchant_id": 1,
+                        "creator_id": 1,
+                        "content": "Asperiores dolores fugit in sunt et similique similique. Quidem dolores facere dolorum. Deserunt exercitationem possimus qui ab sunt eos sit quibusdam. Laborum porro vel error voluptate ut facere.",
+                        "tags": "Et aliquid aperiam dolorem voluptas fugit perferendis. Nihil et sunt veniam et fuga voluptatum eius. Libero eveniet maxime sequi.",
+                        "type": "image",
+                        "access": "restricted",
+                        "original_post": "",
+                        "created_at": "1993-05-26 12:22:39",
+                        "updated_at": "2017-11-03 11:32:14",
+                        "likes_count": 2,
+                        "bookmarks_count": 1,
+                        "attachments": [
+                            {
+                                "id": 1,
+                                "post_id": 2,
+                                "media_url": "https://lorempixel.com/640/480/?84883",
+                                "created_at": "1985-05-23 09:45:40",
+                                "updated_at": "1992-12-02 06:53:41"
+                            }
+                        ],
+                        "permissions": [
+                            {
+                                "id": 13,
+                                "post_id": 2,
+                                "user_id": 8,
+                                "permission": "view",
+                                "created_at": "2012-11-28 20:43:58",
+                                "updated_at": "1976-02-21 14:53:01"
+                            },
+                            {
+                                "id": 21,
+                                "post_id": 2,
+                                "user_id": 1,
+                                "permission": "view",
+                                "created_at": "2017-11-03 11:32:14",
+                                "updated_at": "2017-11-03 11:32:14"
+                            },
+                            {
+                                "id": 22,
+                                "post_id": 2,
+                                "user_id": 1,
+                                "permission": "edit",
+                                "created_at": "2017-11-03 11:32:14",
+                                "updated_at": "2017-11-03 11:32:14"
+                            }
+                        ]
+                    }
+                ],
+                "from": 1,
+                "last_page": 2,
+                "next_page_url": "/?page=2",
+                "path": "/",
+                "per_page": "2",
+                "prev_page_url": null,
+                "to": 2,
+                "total": 3
+            }
+        }
+
+
+## Get Post by ID [/api/post/get/{id}?{api_token}]
+
+### Get Post by ID [GET]
+
++ Parameters
+    + id (number, required) - The posts id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 2,
+                    "merchant_id": 1,
+                    "creator_id": 1,
+                    "content": "Asperiores dolores fugit in sunt et similique similique. Quidem dolores facere dolorum. Deserunt exercitationem possimus qui ab sunt eos sit quibusdam. Laborum porro vel error voluptate ut facere.",
+                    "tags": "Et aliquid aperiam dolorem voluptas fugit perferendis. Nihil et sunt veniam et fuga voluptatum eius. Libero eveniet maxime sequi.",
+                    "type": "image",
+                    "access": "private",
+                    "original_post": "",
+                    "created_at": "1993-05-26 12:22:39",
+                    "updated_at": "2005-08-23 19:36:39",
+                    "likes_count": 2,
+                    "bookmarks_count": 1,
+                    "attachments": [
+                        {
+                            "id": 1,
+                            "post_id": 2,
+                            "media_url": "https://lorempixel.com/640/480/?84883",
+                            "created_at": "1985-05-23 09:45:40",
+                            "updated_at": "1992-12-02 06:53:41"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Create Post [/api/post/create?{creator_id}&{content}&{tags}&{type}&{original_post}&{lat}&{lng}&{access}&{attach}&{api_token}]
+
+### Create Post [POST]
+
++ Parameters
+    + creator_id (number, required) - The users id
+    + content (string, required) - The content of post
+    + tags (string, optional) - tags
+    + type (enum[text, video, image, gallery, mixed]) - post type
+    + original_post (number, optional) - original post
+    + lat (string, optional) - latitude
+    + lng (string, optional) - longitude
+    + access (enum[public, private, restricted], required) - public, private, restricted access for this post
+    + attach (array, optional) - to create multiple attachments per post by arrays
+     note ~ input field as `attach[]`
+    + group_id (integer, optional) - create the group_post data which is belong to the specific group
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+               creator_id: 1
+               content: My own blog
+               access: private
+               original_post: 1
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 201
+            },
+            "data": {
+                "post_id": 22,
+                "creator_id": "1",
+                "content": "My own blog",
+                "access": "private",
+                "type": "image"
+            }
+        }
+
+
+## Update Post [/api/post/update/{id}?{creator_id}&{content}&{tags}&{type}&{original_post}&{lat}&{lng}&{access}&{attach}&{api_token}]
+
+### Update Post [POST]
+
++ Parameters
+
+    + id (number, required) - Post ID
+    + content (string, required) - The content of post
+    + tags (string, optional) - tags
+    + type (enum[text, video, image, gallery, mixed]) - post type
+    + original_post (number, optional) - original post
+    + lat (string, optional) - latitude
+    + lng (string, optional) - longitude
+    + access (enum[public, private, restricted], required) - public, private, restricted access for this post
+    + attach (array, optional) - to create multiple attachments per post by arrays
+     note ~ input field as `attach[]`
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
+    + Body
+
+            {
+                type: "text|image|video|gallery|mixed"
+                access: "public|restricted|private"
+            }
+
++ Response 200 (application/json)
+
+        {
+           "meta": {
+               "success": true,
+               "message": "The data was updated successfully",
+               "statusCode": 201
+           },
+           "data": {
+               "post_id": "24"
+           }
+        }
+
++ Response 422 (application/json)
+
+        {
+            "meta": {
+                "success": false,
+                "error": "Missing required parameters: access",
+                "status_code": 422
+            },
+            "data": {
+                "post_id": "24"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "meta": {
+                "success": false,
+                "error": "Bad Request,Client Error",
+                "status_code": 400
+            },
+            "data": {
+                "post_id": "1234"
+            }
+        }
+
+
+## Delete Post [/api/post/destroy/{id}?{api_token}]
+
+### Delete Post [DELETE]
+
++ Parameters
+    + id (number, required) - The post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "post_id": "24"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "meta": {
+                "success": false,
+                "error": "Bad Request,Client Error",
+                "status_code": 400
+            },
+            "data": {
+                "post_id": "56"
+            }
+        }
+
+## Search Post [/api/post/search/{keyword}?{api_token}&{user_id}&{order}&{order_by}]
+
+### Search Post [GET]
+
++ Parameters
+    + keyword (string, required) - keyword to search
+    + api_token (string, required) - for authentication
+    + user_id (number, required) - The user id to search for private and restricted access
+     (Eg) user_id = 8 and keyword = Provident
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 8,
+                    "merchant_id": 1,
+                    "creator_id": 8,
+                    "content": "Provident praesentium dolores omnis quis deserunt et omnis. Quas error consequuntur est. Voluptatem rerum dolor rerum est.",
+                    "tags": "Consequuntur rerum nulla vel harum laboriosam magnam. Et aut nemo et ratione magnam ut. Et consequatur hic nesciunt perferendis.",
+                    "type": "mixed",
+                    "access": "private",
+                    "original_post": "6",
+                    "created_at": "2010-03-20 13:05:21",
+                    "updated_at": "2017-10-14 07:00:40"
+                }
+            ]
+        }
+
+## Update Post Permissions [/api/post/{id}/updatePermission?{access}&{permissions}&{user_id}&{api_token}]
+
+### Update Post Permissions [POST]
+
++ Parameters
+    + id (number, required) - The post id
+    + access (string, required) - The access (private, public, restricted)
+    + permissions (array, optional) - If the access is restricted,
+    the permissions field required as array <br/> (permissions => [0 => 'view', 1 => 'download'])
+    + user_id (number, optional) - If the access is restriced,
+    the user_id is required to define who can access these permissions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "post_id": "3",
+                "user_id": "2",
+                "access": "restricted",
+                "permissions": [
+                    "view",
+                    "download"
+                ],
+                "user_permissions": [
+                    {
+                        "post_id": "3",
+                        "user_id": "2",
+                        "permission": "view",
+                        "updated_at": "2017-10-01 07:45:19",
+                        "created_at": "2017-10-01 07:45:19",
+                        "id": 27
+                    },
+                    {
+                        "post_id": "3",
+                        "user_id": "2",
+                        "permission": "download",
+                        "updated_at": "2017-10-01 07:45:19",
+                        "created_at": "2017-10-01 07:45:19",
+                        "id": 28
+                    }
+                ]
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "post_id": "3",
+                "access": "private"
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "post_id": "3",
+                "access": "public"
+            }
+        }
+
+## Report Post [/api/post/{id}/reportPost?{reporter_id}&{reason}&{api_token}]
+
+### Report Post [POST]
+
++ Parameters
+    + id (number, required) - The post id
+    + reporter_id (number, required) - The reporter id
+    + reason (string, required) - Reason for report
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "post_id": "12",
+                "reporter_id": "3",
+                "reason": "bad",
+                "updated_at": "2017-12-16 17:10:50",
+                "created_at": "2017-12-16 17:10:50",
+                "id": 2
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "success": false,
+            "message": [
+                "This user is already reported this post"
+            ],
+            "statusCode": 500
+        }
+
+## Popular Post [/api/post/popular?{user_id}&{page}&{limit}&{order_by}&{order}&{api_token}]
+
+### Popular Post [GET]
+
++ Parameters
+    + user_id (number, required) - The user id
+    + page (number, required) - page number
+    + order_by (string, required) - likes or bookmarks or shares or rating or rating value
+    + order (string, optional) - asc, ASC, desc, DESC
+    + limit (number, optional) - how many data will display per page
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 14,
+                        "merchant_id": 3,
+                        "creator_id": 3,
+                        "content": "Velit ipsa pariatur doloribus reprehenderit aut. Veritatis ipsum corporis et sed et animi quis. Sunt fuga voluptatibus exercitationem quia dolorem. Et numquam suscipit eius.",
+                        "tags": "Labore vel distinctio distinctio. Velit perferendis perferendis magni aut dolor enim et.",
+                        "type": "image",
+                        "access": "restricted",
+                        "status": "published",
+                        "original_post": "7",
+                        "created_at": "1992-12-06 02:23:31",
+                        "updated_at": "2002-03-24 01:53:30",
+                        "bookmarks_count": 2
+                    },
+                    {
+                        "id": 13,
+                        "merchant_id": 5,
+                        "creator_id": 4,
+                        "content": "Modi magnam tempora ut pariatur. Sit est illum placeat ad. Distinctio excepturi ipsa tempora atque.",
+                        "tags": "Rem natus neque et. Non excepturi magnam quia.",
+                        "type": "image",
+                        "access": "restricted",
+                        "status": "published",
+                        "original_post": "13",
+                        "created_at": "1985-07-22 20:23:20",
+                        "updated_at": "2018-03-19 10:44:23",
+                        "bookmarks_count": 1
+                    }
+                ],
+                "from": 1,
+                "last_page": 1,
+                "next_page_url": null,
+                "path": "http://pithos.app/api/post/popular",
+                "per_page": 15,
+                "prev_page_url": null,
+                "to": 2,
+                "total": 2
+            }
+        }
+
+# Group Categories
+
+## Get All Categories [/api/category/get_all?{api_token}&{limit}&{page}&{order_by}&{order}]
+
+### Get All Categories [GET]
+
++ Parameters
+    + limit (number, required) - how many data you want to display per page
+    + page (number, required) - page number
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+    + api_token (string, required) - Merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 4,
+                        "merchant_id": 1,
+                        "name": "Helena Brown",
+                        "description": "Quaerat eveniet tempore incidunt rerum esse facilis. Voluptas tempora aut fuga quis fuga tempora expedita. Ut sunt fuga eum sunt esse vel fuga qui.",
+                        "created_at": "2012-12-20 19:42:30",
+                        "updated_at": "1970-07-16 01:47:15",
+                        "deleted_at": null
+                    },
+                    {
+                        "id": 9,
+                        "merchant_id": 1,
+                        "name": "Gordon Allen",
+                        "description": "Excepturi enim at consequatur molestiae. Eos rerum modi rerum voluptatum distinctio. Molestias porro blanditiis voluptatem corporis tempora. Sint aut quam rerum nemo.",
+                        "created_at": "1987-04-04 10:54:41",
+                        "updated_at": "2001-08-27 17:48:41",
+                        "deleted_at": null
+                    },
+                    {
+                        "id": 14,
+                        "merchant_id": 1,
+                        "name": "Alison Campbell",
+                        "description": "Repellendus magni sint aut ut sint repellendus illo ab. Fugit id omnis perferendis dolorem velit. Omnis cum expedita ut est saepe error.",
+                        "created_at": "2001-02-14 07:12:13",
+                        "updated_at": "2015-09-02 07:16:39",
+                        "deleted_at": null
+                    }
+                ],
+                "from": 1,
+                "last_page": 2,
+                "next_page_url": "http://pithos.app/api/category/get_all?page=2",
+                "path": "http://pithos.app/api/category/get_all",
+                "per_page": "3",
+                "prev_page_url": null,
+                "to": 3,
+                "total": 4
+            }
+        }
+
+
+## Get Category by ID [/api/category/get/{id}?{api_token}]
+
+### Get Category by ID [GET]
+
++ Parameters
+    + id (number, required) - The posts id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 2,
+                "merchant_id": 8,
+                "name": "Ellie Clark",
+                "description": "Quis vel soluta dicta ut libero. Porro quis sed dolorum dolorem. Id enim odio molestiae eaque numquam architecto. Modi explicabo error sed in eos.",
+                "created_at": "2016-08-20 15:41:40",
+                "updated_at": "1987-01-14 07:38:26",
+                "deleted_at": "2006-08-18 18:48:28"
+            }
+        }
+
+## Create Category [/api/category/create?{name}&{description}&{api_token}]
+
+### Create Category [POST]
+
++ Parameters
+    + name (string, required) - The title of category
+    + description (string, optional) - The description
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+               creator_id: 1
+               content: My own blog
+               access: private
+               original_post: 1
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 201
+            },
+            "data": {
+                "name": "my created category",
+                "description": "my created category description",
+                "merchant_id": 1,
+                "updated_at": "2017-10-07 17:08:47",
+                "created_at": "2017-10-07 17:08:47",
+                "id": 22
+            }
+        }
+
+
+## Update Category [/api/category/update/{id}?{name}&{description}&{api_token}]
+
+### Update Category [POST]
+
++ Parameters
+    + id(number, required) - category id
+    + name (string, optional) - Category name
+    + description (string, optional) - Category descriptions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
+    + Body
+
+            {
+                type: "text|image|video|gallery|mixed"
+                access: "public|restricted|private"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "category_id": "23"
+            }
+        }
+
+
+## Delete Category [/api/category/destroy/{id}?{api_token}]
+
+### Delete Category [DELETE]
+
++ Parameters
+    + id (number, required) - The post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "category_id": "22"
+            }
+        }
+
+## Search Categories [/api/category/search/{keyword}?{api_token}&{user_id}&{order}&{order_by}]
+
+### Search Categories [GET]
+
++ Parameters
+    + keyword (string, required) - keyword to search
+    + api_token (string, required) - for authentication
+    + user_id (number, required) - The user id to search for private and restricted access
+     (Eg) user_id = 1 and keyword = Elliott
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "category": {
+                        "id": 10,
+                        "merchant_id": 1,
+                        "name": "Elliot Chapman",
+                        "description": "Accusamus molestiae fuga vero ullam. Voluptatem eaque est sint est. Ut rem labore ut iusto minus quidem voluptatem.",
+                        "created_at": "1974-12-29 00:12:59",
+                        "updated_at": "1991-03-13 03:45:17",
+                        "deleted_at": null
+                    },
+                    "posts": [
+                        {
+                            "id": 8,
+                            "merchant_id": 1,
+                            "creator_id": 8,
+                            "content": "Provident praesentium dolores omnis quis deserunt et omnis. Quas error consequuntur est. Voluptatem rerum dolor rerum est.",
+                            "tags": "Consequuntur rerum nulla vel harum laboriosam magnam. Et aut nemo et ratione magnam ut. Et consequatur hic nesciunt perferendis.",
+                            "type": "mixed",
+                            "access": "private",
+                            "original_post": "6",
+                            "created_at": "2010-03-20 13:05:21",
+                            "updated_at": "2017-10-14 07:00:40",
+                            "permissions": [],
+                            "attachments": [
+                                {
+                                    "id": 2,
+                                    "post_id": 8,
+                                    "media_url": "https://lorempixel.com/640/480/?71769",
+                                    "created_at": "1992-11-19 10:48:31",
+                                    "updated_at": "2011-06-03 19:08:48"
+                                },
+                                {
+                                    "id": 15,
+                                    "post_id": 8,
+                                    "media_url": "https://lorempixel.com/640/480/?72158",
+                                    "created_at": "2013-09-28 12:51:11",
+                                    "updated_at": "1972-09-02 05:18:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
+
+# Group Groups
+
+## Get All Groups [/api/group/get_all?{api_token}&{limit}&{page}&{order_by}&{order}]
+
+### Get All Groups [GET]
+
++ Parameters
+    + limit (number, required) - how many data you want to display per page
+    + page (number, required) - page number
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+    + api_token (string, required) - Merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 2,
+                        "merchant_id": 1,
+                        "name": "group_2Tina Watson",
+                        "description": "Fuga exercitationem occaecati dolores quia hic distinctio. Harum deleniti dolores commodi et id. Soluta quia consectetur nulla ut soluta.",
+                        "created_at": "1980-04-01 03:44:49",
+                        "updated_at": "1991-11-30 05:38:04",
+                        "deleted_at": null
+                    },
+                    {
+                        "id": 12,
+                        "merchant_id": 1,
+                        "name": "group_12Phoebe Parker",
+                        "description": "Magni debitis et in dolor tempora unde ipsum. Nulla rerum maiores aliquam eligendi deserunt. Cumque nihil omnis ut iure consequatur ab minus.",
+                        "created_at": "1989-02-05 06:41:52",
+                        "updated_at": "1989-01-14 22:50:27",
+                        "deleted_at": null
+                    },
+                    {
+                        "id": 15,
+                        "merchant_id": 1,
+                        "name": "group_15Olivia Baker",
+                        "description": "Ut ab consequatur ut aut. Et dolorum aut aut aut. Voluptas et sequi nihil quaerat eum sit.",
+                        "created_at": "1998-12-02 02:54:06",
+                        "updated_at": "1992-11-30 07:34:09",
+                        "deleted_at": null
+                    }
+                ],
+                "from": 1,
+                "last_page": 2,
+                "next_page_url": "http://pithos.app/api/group/get_all?page=2",
+                "path": "http://pithos.app/api/group/get_all",
+                "per_page": "3",
+                "prev_page_url": null,
+                "to": 3,
+                "total": 5
+            }
+        }
+
+
+## Get Group by ID [/api/group/get/{id}?{api_token}]
+
+### Get Group by ID [GET]
+
++ Parameters
+    + id (number, required) - The posts id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 4,
+                "merchant_id": 1,
+                "name": "group_4Ryan Khan",
+                "description": "Atque sequi qui error asperiores qui dolores. Atque saepe eveniet molestiae. Ab atque exercitationem quia ut ipsa perferendis nulla.",
+                "created_at": "2004-08-17 14:50:53",
+                "updated_at": "1993-12-11 21:11:45",
+                "deleted_at": null
+            }
+        }
+
+## Create Group [/api/group/create?{name}&{description}&{api_token}]
+
+### Create Group [POST]
+
++ Parameters
+    + name (string, required) - The title of category
+    + description (string, optional) - The description
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+               creator_id: 1
+               content: My own blog
+               access: private
+               original_post: 1
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 201
+            },
+            "data": {
+                "name": "newly created group",
+                "description": "new group was created.",
+                "merchant_id": 1,
+                "updated_at": "2017-10-07 18:05:46",
+                "created_at": "2017-10-07 18:05:46",
+                "id": 21
+            }
+        }
+
+
+## Update Group [/api/group/update/{id}?{name}&{description}&{api_token}]
+
+### Update Group [POST]
+
++ Parameters
+    + id (number, required) - group id
+    + name (string, optional) - Category name
+    + description (string, optional) - Category descriptions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
+    + Body
+
+            {
+                type: "text|image|video|gallery|mixed"
+                access: "public|restricted|private"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "group_id": "21"
+            }
+        }
+
+
+## Delete Group [/api/group/destroy/{id}?{api_token}]
+
+### Delete Group [DELETE]
+
++ Parameters
+    + id (number, required) - The post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "group_id": "21"
+            }
+        }
+
+
+## Search Groups [/api/group/search/{keyword}?{api_token}&{user_id}&{order}&{order_by}]
+
+### Search Groups [GET]
+
++ Parameters
+    + keyword (string, required) - keyword to search
+    + api_token (string, required) - for authentication
+    + user_id (number, required) - The user id to search for private and restricted access
+     (Eg) user_id = 1 and keyword = george
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+        "meta": {
+            "success": true,
+            "message": "The data was fetched successfully",
+            "statusCode": 200
+        },
+        "data": [
+            {
+                "category": {
+                    "id": 10,
+                    "merchant_id": 1,
+                    "name": "group_10George Martin",
+                    "description": "Rem vel quae eaque animi inventore quaerat debitis. Quas fugit quo non praesentium non maxime architecto. Non numquam laboriosam possimus modi similique cupiditate.",
+                    "created_at": "2014-01-05 16:06:37",
+                    "updated_at": "1982-09-22 00:19:07",
+                    "deleted_at": "1994-03-24 01:15:27"
+                },
+                "posts": [
+                    {
+                        "id": 2,
+                        "merchant_id": 1,
+                        "creator_id": 1,
+                        "content": "Error non facilis nostrum dicta sed qui repellat ipsum. Nobis mollitia ipsum eos dolores et id nulla.",
+                        "tags": "Est commodi voluptas ut commodi autem nostrum. Enim est qui nam. Voluptatem eos fugit facere quas error hic.",
+                        "type": "video",
+                        "access": "private",
+                        "original_post": "",
+                        "created_at": "2014-11-29 04:08:40",
+                        "updated_at": "1979-10-09 21:05:18",
+                        "permissions": [],
+                        "attachments": [
+                            {
+                                "id": 9,
+                                "post_id": 2,
+                                "media_url": "https://lorempixel.com/640/480/?27601",
+                                "created_at": "1982-07-19 06:32:50",
+                                "updated_at": "2005-03-17 03:07:47"
+                            },
+                            {
+                                "id": 19,
+                                "post_id": 2,
+                                "media_url": "https://lorempixel.com/640/480/?78362",
+                                "created_at": "2002-10-08 04:51:58",
+                                "updated_at": "2006-10-28 07:25:37"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+        }
+
+# Group Ratings
+
+## Create Rating by Post ID [/api/post/{post_id}/rating?{api_token}&{user_id}&{rating_value}&{comment}]
+
+### Create Rating by Post ID [POST]
+
++ Parameters
+    + user_id (number, required) - user id
+    + post_id (number, required) - post id
+    + rating_value (string, required) - rating value
+    + comment (string, optional) - rating comment
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 201
+            },
+            "data": {
+                "post_id": "1",
+                "user_id": "3",
+                "rating_value": "4",
+                "comment": "good",
+                "updated_at": "2018-03-25 12:14:39",
+                "created_at": "2018-03-25 12:14:39",
+                "id": 2
+            }
+        }
+
+## Get All Ratings By PostId [/api/post/{post_id}/rating?{api_token}&{limit}&{page}&{api_token}]
+
+### Get All Ratings By PostId [GET]
+
++ Parameters
+    + limit (number, required) - how many data you want to display per page
+    + page (number, required) - page number
+    + post_id (number, required) - all ratings for specific post
+    + api_token (string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 1,
+                        "user_id": 3,
+                        "post_id": 1,
+                        "rating_value": "1",
+                        "comment": "abcd",
+                        "created_at": "2018-03-25 12:09:47",
+                        "updated_at": "2018-03-25 12:09:47",
+                        "deleted_at": null
+                    },
+                    {
+                        "id": 2,
+                        "user_id": 3,
+                        "post_id": 1,
+                        "rating_value": "4",
+                        "comment": "good",
+                        "created_at": "2018-03-25 12:14:39",
+                        "updated_at": "2018-03-25 12:14:39",
+                        "deleted_at": null
+                    }
+                ],
+                "from": 1,
+                "last_page": 1,
+                "next_page_url": null,
+                "path": "http://pithos.app/api/post/1/rating",
+                "per_page": "5",
+                "prev_page_url": null,
+                "to": 2,
+                "total": 2
+            }
+        }
+
+## Get Specific Rating [/api/rating/{id}?{api_token}]
+
+### Get Specific Rating [GET]
+
++ Parameters
+    + id (number, required) - rating id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 2,
+                "user_id": 3,
+                "post_id": 1,
+                "rating_value": "4",
+                "comment": "good",
+                "created_at": "2018-03-25 12:14:39",
+                "updated_at": "2018-03-25 12:14:39",
+                "deleted_at": null
+            }
+        }
+
+
+## Update Rating [/api/rating/{id}?{rating_value}&{comment}&{api_token}]
+
+### Update Rating [PUT]
+
++ Parameters
+    + id (number, required) - rating id
+    + rating_value (string, required) - rating value
+    + comment (string, optional) - rating comment
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "rating_id": 2
+            }
+        }
+
+
+## Delete Rating [/api/rating/{id}?{api_token}]
+
+### Delete Rating [DELETE]
+
++ Parameters
+    + id (number, required) - The post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "rating_id": 2
+            }
+        }
+
+
+# Group Likes
+
+## Create Like by Post ID [/api/{post_id}/like?{api_token}&{user_id}]
+
+### Create Like by Post ID [POST]
+
++ Parameters
+    + user_id (number, required) - user id
+    + post_id (number, required) - post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "user_id": "3",
+                "post_id": "1",
+                "updated_at": "2018-04-07 06:26:27",
+                "created_at": "2018-04-07 06:26:27",
+                "id": 24
+            }
+        }
+
+## Get all likes for a post [/api/{post_id}/likes?{api_token}]
+
+### Get all likes for a post [GET]
+
++ Parameters
+    + post_id (number, required) - all ratings for specific post
+    + api_token (string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 1,
+                    "merchant_id": 1,
+                    "creator_id": 4,
+                    "content": "Quae fugit velit aspernatur tempore voluptatum qui esse odio. Id ut et cumque sunt omnis. Deserunt nihil harum et earum quo.",
+                    "tags": "Labore veritatis voluptatem qui excepturi. Incidunt mollitia doloremque provident. Et maiores ipsa quisquam soluta illum ut. Et autem dolorem iste minima voluptas corrupti.",
+                    "type": "mixed",
+                    "access": "private",
+                    "status": "published",
+                    "original_post": "",
+                    "created_at": "1985-07-03 09:08:21",
+                    "updated_at": "1974-06-27 04:56:15",
+                    "likes": [
+                        {
+                            "id": 21,
+                            "user_id": 2,
+                            "post_id": 1,
+                            "created_at": "2018-04-07 06:15:48",
+                            "updated_at": "2018-04-07 06:15:48"
+                        },
+                        {
+                            "id": 22,
+                            "user_id": 4,
+                            "post_id": 1,
+                            "created_at": "2018-04-07 06:16:06",
+                            "updated_at": "2018-04-07 06:16:06"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Get specific like for a specific post [/api/{post_id}/likes/{like_id}?{api_token}]
+
+### Get specific like for a specific post [GET]
+
++ Parameters
+    + post_id (number, required) - post id
+    + like_id (number, required) - like id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 1,
+                    "merchant_id": 1,
+                    "creator_id": 4,
+                    "content": "Quae fugit velit aspernatur tempore voluptatum qui esse odio. Id ut et cumque sunt omnis. Deserunt nihil harum et earum quo.",
+                    "tags": "Labore veritatis voluptatem qui excepturi. Incidunt mollitia doloremque provident. Et maiores ipsa quisquam soluta illum ut. Et autem dolorem iste minima voluptas corrupti.",
+                    "type": "mixed",
+                    "access": "private",
+                    "status": "published",
+                    "original_post": "",
+                    "created_at": "1985-07-03 09:08:21",
+                    "updated_at": "1974-06-27 04:56:15",
+                    "likes": [
+                        {
+                            "id": 21,
+                            "user_id": 2,
+                            "post_id": 1,
+                            "created_at": "2018-04-07 06:15:48",
+                            "updated_at": "2018-04-07 06:15:48"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Get specific like only [/api/like/{like_id}?{api_token}]
+
+### Get specific like only [GET]
+
++ Parameters
+    + like_id (number, required) - like id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 24,
+                "user_id": 3,
+                "post_id": 1,
+                "created_at": "2018-04-07 06:26:27",
+                "updated_at": "2018-04-07 06:26:27"
+            }
+        }
+
+## Delete Specific Like [/api/like/{like_id}/destroy?{user_id}&{api_token}]
+
+### Delete Specific Like [DELETE]
+
++ Parameters
+    + like_id (number, required) - like id
+    + user_id (number, required) - user id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "id": "22"
+            }
+        }
+
+
+# Group Bookmarks
+
+## Create Bookmark by Post ID [/api/{post_id}/bookmark?{api_token}&{user_id}]
+
+### Create Bookmark by Post ID [POST]
+
++ Parameters
+    + user_id (number, required) - user id
+    + post_id (number, required) - post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "user_id": "7",
+                "post_id": "1",
+                "updated_at": "2018-04-07 07:33:58",
+                "created_at": "2018-04-07 07:33:58",
+                "id": 22
+            }
+        }
+
+## Get all bookmarks for a post [/api/{post_id}/bookmarks?{api_token}&{api_token}]
+
+### Get all bookmarks for a post [GET]
+
++ Parameters
+    + post_id (number, required) - all ratings for specific post
+    + api_token (string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 1,
+                    "merchant_id": 1,
+                    "creator_id": 4,
+                    "content": "Quae fugit velit aspernatur tempore voluptatum qui esse odio. Id ut et cumque sunt omnis. Deserunt nihil harum et earum quo.",
+                    "tags": "Labore veritatis voluptatem qui excepturi. Incidunt mollitia doloremque provident. Et maiores ipsa quisquam soluta illum ut. Et autem dolorem iste minima voluptas corrupti.",
+                    "type": "mixed",
+                    "access": "restricted",
+                    "status": "published",
+                    "original_post": "",
+                    "created_at": "1985-07-03 09:08:21",
+                    "updated_at": "2018-04-07 07:15:56",
+                    "bookmarks": [
+                        {
+                            "id": 3,
+                            "user_id": 4,
+                            "post_id": 1,
+                            "created_at": "2002-05-25 16:03:10",
+                            "updated_at": "1980-03-10 18:17:18"
+                        },
+                        {
+                            "id": 21,
+                            "user_id": 3,
+                            "post_id": 1,
+                            "created_at": "2018-04-07 07:33:35",
+                            "updated_at": "2018-04-07 07:33:35"
+                        },
+                        {
+                            "id": 22,
+                            "user_id": 7,
+                            "post_id": 1,
+                            "created_at": "2018-04-07 07:33:58",
+                            "updated_at": "2018-04-07 07:33:58"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Get specific bookmark for a specific post [/api/{post_id}/bookmarks/{bookmark_id}?{api_token}]
+
+### Get specific bookmark for a specific post [GET]
+
++ Parameters
+    + post_id (number, required) - post id
+    + bookmark_id (number, required) - bookmark id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 1,
+                    "merchant_id": 1,
+                    "creator_id": 4,
+                    "content": "Quae fugit velit aspernatur tempore voluptatum qui esse odio. Id ut et cumque sunt omnis. Deserunt nihil harum et earum quo.",
+                    "tags": "Labore veritatis voluptatem qui excepturi. Incidunt mollitia doloremque provident. Et maiores ipsa quisquam soluta illum ut. Et autem dolorem iste minima voluptas corrupti.",
+                    "type": "mixed",
+                    "access": "restricted",
+                    "status": "published",
+                    "original_post": "",
+                    "created_at": "1985-07-03 09:08:21",
+                    "updated_at": "2018-04-07 07:15:56",
+                    "bookmarks": [
+                        {
+                            "id": 21,
+                            "user_id": 3,
+                            "post_id": 1,
+                            "created_at": "2018-04-07 07:33:35",
+                            "updated_at": "2018-04-07 07:33:35"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## Get specific bookmark only [/api/bookmark/{bookmark_id}?{api_token}]
+
+### Get specific bookmark only [GET]
+
++ Parameters
+    + bookmark_id (number, required) - bookmark id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 21,
+                "user_id": 3,
+                "post_id": 1,
+                "created_at": "2018-04-07 07:33:35",
+                "updated_at": "2018-04-07 07:33:35"
+            }
+        }
+
+## Delete Specific Bookmark [/api/bookmark/{bookmark_id}/destroy?{user_id}&{api_token}]
+
+### Delete Specific Bookmark [DELETE]
+
++ Parameters
+    + bookmark_id (number, required) - like id
+    + user_id (number, required) - user id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "id": "20"
+            }
+        }
+
+## Get Bookmarks By User [/api/user/{id}/bookmarks?{limit}&{page}&{order}&{order_by}&{api_token}]
+
+### Get Bookmarks By User [GET]
+
++ Parameters
+    + id (number, required) - user id
+    + limit (number, optional) - how many data you want to display per page
+    + page (number, optional) - page number
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+    + api_token (string, required) - Merchant API token
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was fetched successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 6,
+                        "user_id": 9,
+                        "post_id": 11,
+                        "created_at": "1989-09-08 09:38:37",
+                        "updated_at": "1990-10-15 13:23:50",
+                        "posts": {
+                            "id": 11,
+                            "merchant_id": 1,
+                            "creator_id": 8,
+                            "content": "Non eum sit quos fugiat dolor sunt. Animi minima ut numquam dicta. Quas repellendus dolore perferendis blanditiis autem facere enim itaque.",
+                            "tags": "Distinctio at qui impedit. Magni qui deleniti vel veniam non. Sit ex quaerat atque aliquid.",
+                            "type": "image",
+                            "access": "public",
+                            "status": "published",
+                            "original_post": "",
+                            "lat": "-36.271974",
+                            "lng": "111.988322",
+                            "created_at": "1996-10-26 05:36:04",
+                            "updated_at": "1971-04-05 07:16:38",
+                            "deleted_at": null
+                        }
+                    },
+                    {
+                        "id": 8,
+                        "user_id": 9,
+                        "post_id": 9,
+                        "created_at": "2016-01-09 00:44:32",
+                        "updated_at": "1992-12-03 03:50:49",
+                        "posts": {
+                            "id": 9,
+                            "merchant_id": 1,
+                            "creator_id": 8,
+                            "content": "Vel aut est beatae impedit autem molestiae. Ratione unde ad sed vero. Cumque error fuga dolores quae alias sint soluta animi.",
+                            "tags": "Asperiores sit vel sunt. Ducimus rerum autem corrupti debitis et. Quos itaque adipisci impedit officiis dolorem.",
+                            "type": "video",
+                            "access": "private",
+                            "status": "published",
+                            "original_post": "5",
+                            "lat": "53.875112",
+                            "lng": "31.665681",
+                            "created_at": "1982-07-22 08:20:20",
+                            "updated_at": "1995-06-05 07:04:33",
+                            "deleted_at": null
+                        }
+                    }
+                ],
+                "from": 1,
+                "last_page": 2,
+                "next_page_url": "http://pithos.local/api/user/9/bookmarks?page=2",
+                "path": "http://pithos.local/api/user/9/bookmarks",
+                "per_page": "2",
+                "prev_page_url": null,
+                "to": 2,
+                "total": 4
+            }
+        }
+
+
+# Group Complaints
+
+## Get All Complaints By Reporter [/api/complaints?{api_token}&{reporter_id}&{limit}&{page}&{order_by}&{order}]
+
+### Get All Complaints By Reporter [GET]
+
++ Parameters
+    + reporter_id (number, required) - the user who reported to post
+    + limit (number, required) - how many data you want to display per page
+    + page (number, required) - page number
+    + order (string, optional) - order by column ASC or DESC. (Default is ASC)
+    + order_by(string, optional) - order by name or id .. etc.
+    + api_token (string, required) - Merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 1,
+                        "post_id": 20,
+                        "reporter_id": 4,
+                        "reason": "including inappropriate content",
+                        "created_at": "2018-04-07 07:15:56",
+                        "updated_at": "2018-04-07 07:15:56"
+                    },
+                    {
+                        "id": 2,
+                        "post_id": 41,
+                        "reporter_id": 4,
+                        "reason": "including inappropriate content",
+                        "created_at": "2018-04-08 15:31:19",
+                        "updated_at": "2018-04-08 15:31:19"
+                    }
+                ],
+                "from": 1,
+                "last_page": 1,
+                "next_page_url": null,
+                "path": "http://pithos.app/api/complaints",
+                "per_page": "20",
+                "prev_page_url": null,
+                "to": 2,
+                "total": 2
+            }
+        }
+
+
+## Get Complaint by ID [/api/complaints/{report_id}?{api_token}&{user_id}]
+
+### Get Complaint by ID [GET]
+
++ Parameters
+    + report_id (number, required) - The report id
+    + user_id (number, required) - required, to check if allowed
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": [
+                {
+                    "id": 2,
+                    "post_id": 41,
+                    "reporter_id": 4,
+                    "reason": "including inappropriate content",
+                    "created_at": "2018-04-08 15:31:19",
+                    "updated_at": "2018-04-08 15:31:19"
+                }
+            ]
+        }
+
+## Destroy Complaint [/api/complaints/{report_id}?{api_token}&{user_id}]
+
+### Destroy Complaint [DELETE]
+
++ Parameters
+    + report_id (number, required) - The report id
+    + user_id (number, required) - reporter id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "report_id": "2"
+            }
+        }
+
+## Resolve Complaint [/api/complaints/resolve?{report_id}{api_token}&{action}&{post_id}&{complaint_id}]
+
+### Resolve Complaint [POST]
+
++ Parameters
+    + report_id (number, required) - The report id
+    + action (string, required) - in : delete_complaint or delete_post
+    + post_id (number, optional) - if action is delete post, it is required
+    + complaint_id (number, optional) - if action is delete complaint, it is required
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+                X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "action": "delete_post"
+            }
+        }
+
+
+# Group Comments
+
+## Get All Comments By PostId [/api/post/{post_id}/comments?{api_token}&{limit}&{page}]
+
+### Get All Comments By PostId [GET]
+
++ Parameters
+    + limit (number, required) - how many data you want to display per page
+    + page (number, required) - page number
+    + post_id (number, required) - all comments for specific post
+    + api_token (string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                per_page: 3
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 1,
+                        "post_id": 2,
+                        "user_id": 2,
+                        "content": "hi data",
+                        "tags": "Jane Miller",
+                        "mentions": "Finley Watson",
+                        "created_at": "1991-03-30 21:04:54",
+                        "updated_at": "2018-08-13 12:23:51",
+                        "deleted_at": null
+                    },
+                    {
+                        "id": 20,
+                        "post_id": 2,
+                        "user_id": 3,
+                        "content": "hi hi",
+                        "tags": null,
+                        "mentions": null,
+                        "created_at": "2018-08-13 14:24:57",
+                        "updated_at": "2018-08-13 14:24:57",
+                        "deleted_at": null
+                    }
+                ],
+                "from": 1,
+                "last_page": 1,
+                "next_page_url": null,
+                "path": "http://pithos.local/api/post/2/comments",
+                "per_page": 15,
+                "prev_page_url": null,
+                "to": 2,
+                "total": 2
+            }
+        }
+
+## Get Specific Comment [/api/comment/{id}?{api_token}]
+
+### Get Specific Comment [GET]
+
++ Parameters
+    + id (number, required) - rating id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 2,
+                "post_id": 3,
+                "user_id": 2,
+                "content": "hi data dda",
+                "tags": "Joe Hunter",
+                "mentions": "Faye Hunt",
+                "created_at": "1973-07-23 20:58:52",
+                "updated_at": "2018-08-13 12:33:57",
+                "deleted_at": null
+            }
+        }
+
+## Create Comment by Post ID [/api/post/{post_id}/comment/new?{api_token}&{user_id}&{content}&{tags}&{mentions}]
+
+### Create Comment by Post ID [POST]
+
++ Parameters
+    + post_id (number, required) - post id
+    + user_id (number, required) - user id
+    + content (string, required) - content
+    + tags (string, optional) - tags value
+    + mentions (string, optional) - mentions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "user_id": "3",
+                "post_id": "2",
+                "content": "hi hi",
+                "tags": null,
+                "mentions": null,
+                "updated_at": "2018-08-13 14:24:57",
+                "created_at": "2018-08-13 14:24:57",
+                "id": 20
+            }
+        }
+
+## Create Comment [/api/comment/create?{api_token}&{user_id}&{post_id}&{content}&{tags}&{mentions}]
+
+### Create Comment [POST]
+
++ Parameters
+    + user_id (number, required) - user id
+    + post_id (number, required) - post id
+    + content (string, required) - content
+    + tags (string, optional) - tags value
+    + mentions (string, optional) - mentions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "user_id": "5",
+                "post_id": "2",
+                "content": "my comment",
+                "tags": "wyne",
+                "mentions": null,
+                "updated_at": "2018-08-13 14:28:57",
+                "created_at": "2018-08-13 14:28:57",
+                "id": 22
+            }
+        }
+
+
+## Update Comment [/api/comment/{id}?{user_id}&{content}&{tags}&{mentions}&{api_token}]
+
+### Update Comment [PUT]
+
++ Parameters
+    + id (number, required) - comment id
+    + user_id (number, required) - user id
+    + content (string, required) - content
+    + tags (string, optional) - tags value
+    + mentions (string, optional) - mentions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "comment_id": "2"
+            }
+        }
+
+## Update Comment By Post Id [/api/post/{post_id}/comment/{id}?{user_id}&   {tags}&{mentions}&{content}&{api_token}]
+
+### Update Comment By Post Id [PUT]
+
++ Parameters
+    + id (number, required) - comment id
+    + post_id (number, required) - post id
+    + user_id (number, required) - user id
+    + content (string, required) - content
+    + tags (string, optional) - tags value
+    + mentions (string, optional) - mentions
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "comment_id": "2"
+            }
+        }
+
+
+## Delete Comment [/api/comment/{id}?{user_id}&{api_token}]
+
+### Delete Comment [DELETE]
+
++ Parameters
+    + id (number, required) - The comment id
+    + user_id (number, required) - only comment creator can delete the comment
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "comment_id": "2"
+            }
+        }
+
+## Delete Comment By Post Id [/api/post/{post_id}/comment/{id}?{user_id}&{api_token}]
+
+### Delete Comment By Post Id [DELETE]
+
++ Parameters
+    + id (number, required) - The comment id
+    + user_id (number, required) - only comment creator can delete the comment
+    + post_id (number, required) - post id
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "comment_id": "2"
+            }
+        }
+
+# Group Comment Complaints
+
+## Get All Comment Complaints By CommentID [/api/report_comment/complaints?{comment_id}&{api_token}&{limit}&{page}]
+
+### Get All Comment Complaints By CommentID [GET]
+
++ Parameters
+    + limit (number, optional) - how many data you want to display per page
+    + page (number, required) - page number
+    + comment_id (number, required) - comment id for specific complaints
+    + api_token (string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
+    + Body
+
+            {
+                api_token: de83754d674ea87d72f626ca2e8af1f9
+                page: 1
+                comment_id: 1
+                order: desc
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "current_page": 1,
+                "data": [
+                    {
+                        "id": 1,
+                        "comment_id": 1,
+                        "reporter_id": 5,
+                        "reason": "Ratione ea quae praesentium.",
+                        "created_at": "1983-03-04 22:04:14",
+                        "updated_at": null,
+                        "deleted_at": null,
+                        "comments": {
+                            "id": 1,
+                            "post_id": 2,
+                            "user_id": 2,
+                            "content": "hi data",
+                            "tags": "Jane Miller",
+                            "mentions": "Finley Watson",
+                            "created_at": "1991-03-30 22:34:54",
+                            "updated_at": "2019-03-02 15:10:20",
+                            "deleted_at": null,
+                            "posts": {
+                                "id": 2,
+                                "merchant_id": 1,
+                                "creator_id": 5,
+                                "content": "Officia voluptatem optio inventore iure molestiae. Optio nemo esse eaque a id. Debitis vero velit nisi soluta sed itaque.",
+                                "tags": "Excepturi sunt esse eos ea. Deleniti sit est consequatur soluta sit. Consectetur repudiandae ducimus eos harum harum.",
+                                "type": "video",
+                                "access": "public",
+                                "status": "published",
+                                "original_post": "2",
+                                "lat": "57.803424",
+                                "lng": "129.618657",
+                                "created_at": "1977-07-22 21:32:03",
+                                "updated_at": "2018-08-13 14:36:26",
+                                "deleted_at": null
+                            }
+                        }
+                    }
+                ],
+                "from": 1,
+                "last_page": 1,
+                "next_page_url": null,
+                "path": "http://pithos.local/api/report_comment/complaints",
+                "per_page": 10,
+                "prev_page_url": null,
+                "to": 1,
+                "total": 1
+            }
+        }
+
+## Get Specific Comment Complaint [/api/report_comment/complaint/{id}?{api_token}]
+
+### Get Specific Comment [GET]
+
++ Parameters
+    + id (number, required) - rating id
+    + api_token(string, required) - api token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "OK,Successful",
+                "statusCode": 200
+            },
+            "data": {
+                "id": 1,
+                "comment_id": 1,
+                "reporter_id": 5,
+                "reason": "Ratione ea quae praesentium.",
+                "created_at": "1983-03-04 22:04:14",
+                "updated_at": null,
+                "deleted_at": null
+            }
+        }
+
+## Create Comment Complaint by Comment ID [/api/report_comment/report?{api_token}&{comment_id}&{reporter_id}&{reason}]
+
+### Create Comment Complaint by Comment ID [POST]
+
++ Parameters
+    + comment_id (number, required) - comment id
+    + reporter_id (number, required) - user id
+    + reason (string, required) - Reason to comment
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was added successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "comment_id": "1",
+                "reporter_id": "2",
+                "reason": "sample reason",
+                "updated_at": "2019-03-03 05:35:17",
+                "created_at": "2019-03-03 05:35:17",
+                "id": 26
+            }
+        }
+
+## Update Comment Complaint [/api/report_comment/report/{id}?{reporter_id}&{comment_id}&{reason}&{api_token}]
+
+### Update Comment Complaint [PUT]
+
++ Parameters
+    + id (number, required) - reported comment id
+    + comment_id (number, required) - comment id
+    + reporter_id (number, required) - user id
+    + reason (string, required) - Reason to comment
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: "akformz3wrhionsdilfhoiarfgs798dg"
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was updated successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "reported_id": "1"
+            }
+        }
+
+## Delete Comment [/api/report_comment/report/{id}?{reporter_id}&{api_token}]
+
+### Delete Comment [DELETE]
+
++ Parameters
+    + id (number, required) - The report comment id
+    + reporter_id (number, required) - only comment complaint creator can delete the comment
+    + api_token (string, required) - The merchant API token
+
++ Request (application/json)
+
+    + Headers
+
+            X-Api-Token: akformz3wrhionsdilfhoiarfgs798dg
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "success": true,
+                "message": "The data was deleted successfully",
+                "statusCode": 200
+            },
+            "data": {
+                "reported_id": "1"
+            }
+        }
